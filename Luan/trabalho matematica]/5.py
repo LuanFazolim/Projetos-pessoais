@@ -1,0 +1,16 @@
+s=int(input('n: '))
+b=int(input('base: '))
+n1=int(s/b)
+r1=int(s%b)
+n2=int(n1/b)
+r2=int(n1%b)
+n3=int(n2/b)
+r3=int(n2%b)
+n4=int(n3/b)
+r4=int(n3%b)
+
+
+print('')
+print('{}{}{}{}{}'.format(n4,r4,r3,r2,r1,))
+print('')
+print('={}={}={}={}='.format(n1,n2,n3,n4))

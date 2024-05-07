@@ -1,0 +1,12 @@
+e=int(input('R$: '))
+p=int(input('menor: '))
+m=int(input('do meio: '))
+g=int(input('maior: '))
+s=p+m+g
+d=e/s
+p1=p*d
+m1=m*d
+g1=g*d
+print('o {} = {}R$'.format(p,p1))
+print('o {} = {}R$'.format(m,m1))
+print('o {} = {}R$'.format(g,g1)
