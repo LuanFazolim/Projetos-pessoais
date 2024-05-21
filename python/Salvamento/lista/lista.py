@@ -9,30 +9,30 @@ total = list()
 corda = list()
 cont = 0
 
+
+
+with open("usu.txt","a") as esc:
+    nome = input("nome: ")
+    senha = input("senha: ")
+    abr = esc.write(f"\n{nome}\n\n{senha}\n")
+
 with open("usu.txt","r",encoding="utf-8") as usu:
     for o in usu:
         ler = usu.readline().strip()
+        corda.append(ler)
+        print(ler)
         cont+=1
-        while cont <= 2:
-            corda.append(ler)
-        else:
-            total.append(corda[:])
+        if cont >=2:
             cont = 0
+            total.append(corda[:])
+            corda.clear()
+
+
             
             
         
-        print(o)
-        
-import os
-
-    
-
-    
 
 
-
-
-    
 
 print(f"Corda: {corda[:]}")
 print("\n")
