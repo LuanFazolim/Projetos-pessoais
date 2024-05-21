@@ -1,4 +1,14 @@
 import os
+# Diretório que você deseja definir como o novo diretório de trabalho
+novo_diretorio = "E:\Python luan\python\Salvamento\lista"
+
+# Alterar o diretório de trabalho
+os.chdir(novo_diretorio)
+
+
+
+
+
  
 print("Diretório atual:", os.getcwd())
 print("Arquivos no diretório:", os.listdir())
