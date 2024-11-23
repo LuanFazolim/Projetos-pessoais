@@ -57,7 +57,7 @@ while True:
             time.sleep(0.5)
         print()
 
-        pyautogui.PAUSE = 0.5
+        pyautogui.PAUSE = 1
         time.sleep(1)
         pyautogui.press("win")
 
