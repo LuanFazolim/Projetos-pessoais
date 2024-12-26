@@ -1,0 +1,5 @@
+import pandas as pd
+
+tra = pd.read_csv ("covid19.csv")
+
+tra.to_excel("covid19.xlsx", index=False)
