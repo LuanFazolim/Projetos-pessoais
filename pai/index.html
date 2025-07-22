@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galeria de Fotos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .foto {
+      margin: 10px;
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 150px;
+      text-align: center;
+    }
+
+    .foto img {
+      width: 100%;
+      display: block;
+      border-bottom: 1px solid #444;
+      cursor: pointer;
+    }
+
+    .foto a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #0af;
+      font-weight: bold;
+      background: #000;
+    }
+
+    .foto a:hover {
+      background: #0af;
+      color: #000;
+    }
+
+    /* ZOOM / MODAL */
+    .zoom-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1000;
+      display: none;
+    }
+
+    .zoom-modal img {
+      max-width: 100%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .zoom-controls {
+      margin-top: 10px;
+    }
+
+    .zoom-controls a {
+      padding: 10px 20px;
+      background: #0af;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      margin: 0 10px;
+    }
+
+    .zoom-controls a:hover {
+      background: #fff;
+    }
+
+    .seta {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .seta.esquerda { left: 10px; }
+    .seta.direita { right: 10px; }
+
+    .fechar {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center; padding:10px;">Galeria de Fotos</h1>
+  <div class="galeria" id="galeria"></div>
+
+  <!-- Modal Zoom -->
+  <div class="zoom-modal" id="zoomModal">
+    <span class="fechar" onclick="fecharZoom()">✖</span>
+    <div class="seta esquerda" onclick="mudarFoto(-1)">❮</div>
+    <img id="zoomImg" src="" alt="Zoom" />
+    <div class="seta direita" onclick="mudarFoto(1)">❯</div>
+    <div class="zoom-controls">
+      <a id="botaoDownload" href="#" download>Baixar</a>
+    </div>
+  </div>
+
+  <script>
+    const totalFotos = 657;
+    const galeria = document.getElementById('galeria');
+    const zoomModal = document.getElementById('zoomModal');
+    const zoomImg = document.getElementById('zoomImg');
+    const botaoDownload = document.getElementById('botaoDownload');
+
+    let fotoAtual = 1;
+
+    for (let i = 1; i <= totalFotos; i++) {
+      const div = document.createElement('div');
+      div.className = 'foto';
+
+      const img = document.createElement('img');
+      img.src = `imagens/foto ${i}.JPG`;
+      img.alt = `Foto ${i}`;
+      img.dataset.index = i;
+      img.onclick = () => abrirZoom(i);
+
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.download = `Foto_${i}.JPG`;
+      link.innerText = 'Baixar';
+
+      div.appendChild(img);
+      div.appendChild(link);
+      galeria.appendChild(div);
+    }
+
+    function abrirZoom(index) {
+      fotoAtual = index;
+      const src = `imagens/foto ${fotoAtual}.JPG`;
+      zoomImg.src = src;
+      botaoDownload.href = src;
+      botaoDownload.download = `Foto_${fotoAtual}.JPG`;
+      zoomModal.style.display = 'flex';
+    }
+
+    function fecharZoom() {
+      zoomModal.style.display = 'none';
+    }
+
+    function mudarFoto(direcao) {
+      fotoAtual += direcao;
+      if (fotoAtual < 1) fotoAtual = totalFotos;
+      if (fotoAtual > totalFotos) fotoAtual = 1;
+      abrirZoom(fotoAtual);
+    }
+
+    // Swipe para mobile
+    let startX = 0;
+
+    zoomModal.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    zoomModal.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) mudarFoto(1);  // direita
+        else mudarFoto(-1);         // esquerda
+      }
+    });
+  </script>
+</body>
+</html>
