@@ -63,7 +63,8 @@ class LobbyApp(ctk.CTk):
     def __init__(self):
         
         super().__init__()
-        color_tema = "#360fe2"
+        
+        
         # ======= Configurações da janela =======
         self.title("Automatic dry Trading (ADT)")
         self.geometry("420x760") # Tela cheia
@@ -92,7 +93,7 @@ class LobbyApp(ctk.CTk):
         titulo.pack(pady=60)
 
         #--- Botao - Começar -
-        btn_start = ctk.CTkButton(self, text="Começar", width=220, height=40, command=self.start_simulation)
+        btn_start = ctk.CTkButton(self, text="Começar", width=220, height=40, command=self.Start_simulation)
         btn_start.pack(pady=(0,60))
         Tooltip(btn_start, " Inicia a simulação do sistema ADT ")
         #--- Botao - Editar -
@@ -111,9 +112,42 @@ class LobbyApp(ctk.CTk):
 
     # ======= MENU TESTE DADOS =======
     # ==== COMEÇAR ====
-    def start_simulation(self):
-        #self.limpar_tela()
-        messagebox.showinfo("ℹ️ Sobre", "Aplicativo de Lobby feito em Python 🐍\nPor: Luan Fazolim")
+    def Start_simulation(self):
+        self.limpar_tela()
+        
+        titulo = ctk.CTkLabel(self, text="🚀 Painel de Execução", font=ctk.CTkFont(size=24, weight="bold"))
+        titulo.pack(pady=(30,10))
+
+        subtitulo = ctk.CTkLabel(self, text="Escolha o modo de operação do ADT",font=ctk.CTkFont(size=14))
+        subtitulo.pack(pady=(0,40))
+
+        ctk.CTkButton(self, text="▶ Iniciar Análise ao Vivo", width=220, height=40).pack(pady=10)
+        ctk.CTkButton(self, text="🧪 Back-Test Estratégias", width=220, height=40,command=self.Back_test).pack(pady=10)
+        ctk.CTkButton(self, text="📊 Resultados Recentes", width=220, height=40).pack(pady=10)
+        botao_voltar = ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby)
+        botao_voltar.pack(side="bottom", pady=30)
+    
+    def Back_test(self):
+        janela = ctk.CTkToplevel(self)
+        janela.title("Fazendo Back-Test 🧪")
+        janela.geometry("900x506")
+        janela.resizable(True, True)
+        janela.grab_set()
+        largura_tela = janela.winfo_screenwidth()
+        altura_tela = janela.winfo_screenheight()
+
+        btn_start = ctk.CTkButton(janela, text="Começar", width=220, height=40, command=self.Start_simulation)
+        btn_start.pack(pady=(0,60))
+        caixa = ctk.CTkTextbox(janela, width=int(largura_tela*0.9), height=int(altura_tela*0.3), font=ctk.CTkFont(size=14))
+        caixa.pack(pady=15)
+
+        btn_start = ctk.CTkButton(janela, text="Começar", width=220, height=40, command=self.Start_simulation)
+        btn_start.pack(pady=(0,60))
+
+
+        caixa.configure(state="disabled")
+
+
 
     # ==== Editar Estrategias ====
     def Editar_estrategias(self):
@@ -157,7 +191,10 @@ class LobbyApp(ctk.CTk):
             btn_toggle.configure(command=lambda b=btn_toggle, n=nome: toggle(b, n))
 
         # Botão Voltar
-        ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby).pack(pady=(50,0))
+        botao_voltar = ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby)
+        botao_voltar.pack(side="bottom", pady=30)
+
+
 
 
     # ----- Inside Bar -----
@@ -171,7 +208,8 @@ class LobbyApp(ctk.CTk):
         
         
             
-        ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.Editar_estrategias).pack(pady=(50,0))
+        botao_voltar = ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby)
+        botao_voltar.pack(side="bottom", pady=30)
        
         
             
@@ -188,7 +226,8 @@ class LobbyApp(ctk.CTk):
         ctk.CTkButton(self, text="📋 Visualizar Tickers", width=220, height=40, command=self.TKRS_Vizuaizar_tiker).pack(pady=10)
         if len(pd.read_csv(ISDB_arquivo_tickers)) > 0:
             ctk.CTkButton(self, text="❌ Excluir Tickers", width=220, height=40, command=self.TKRS_Excluir_tiker).pack(pady=10)
-        ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby).pack(pady=(50,0))
+        botao_voltar = ctk.CTkButton(self, text="⬅️ Voltar", width=220, height=40, command=self.criar_lobby)
+        botao_voltar.pack(side="bottom", pady=30)
     # --- Add Ticker
 
 
@@ -279,10 +318,7 @@ class LobbyApp(ctk.CTk):
         ctk.CTkButton(janela, text="Salvar", width=120, height=35, command=salvar).pack(pady=20)
         janela.bind('<Return>', salvar)
 
-          
-
-
-
+        
     #--- Add Pack Ticker
     def TKRS_Add_pack_ticker(self):
         ISDB_pack = pd.read_csv(ISDB_arquivo_pack_tickers)
@@ -346,7 +382,7 @@ class LobbyApp(ctk.CTk):
             
             messagebox.showinfo("ℹ️ ", "EXCLUIR TICKER")
 
-    
+        
     
 
 # ======= EXECUÇÃO =======
