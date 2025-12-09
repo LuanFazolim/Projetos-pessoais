@@ -1,7 +1,7 @@
 intervalo,intervalo_01,code
-1Dia,0,1d
-1semana,0,7d
+5min,0,5m
+15min,0,15m
+1hr,0,1h
+1D,0,1d
+1sem,0,1wk
 1mes,0,1mo
-1y,0,1y
-2y,0,2y
-5y,0,5y

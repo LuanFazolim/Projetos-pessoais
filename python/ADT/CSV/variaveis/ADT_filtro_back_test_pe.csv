@@ -1,7 +1,7 @@
 periodo,periodo_01,code
-5min,1,5m
-15min,0,15m
-1hr,1,1h
-1D,1,1d
-1sem,0,1wk
-1m,0,1mo
+1Dia,0,1d
+1Semana,0,7d
+1Mes,1,1mo
+1y,0,1y
+2y,0,2y
+5y,0,5y
